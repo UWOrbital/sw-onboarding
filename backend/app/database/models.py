@@ -94,3 +94,40 @@ class Command(SQLModel, table=True):
         ),
         {"schema": SCHEMA_NAME},
     )  # Since the table is in a different schema sqlmodel can't find the table normally
+
+
+class CommandHistory(SQLModel, table=False):
+    """
+    Audit log of every change made to a Command.
+
+    A row is appended each time a command is created, updated, or deleted, so a command's lifecycle
+    can be reconstructed after the fact. The table is append-only: rows are never updated or deleted,
+    even when the command they describe is.
+
+    :param id: Audit entry ID. Generated per row, as on :class:`Command`
+    :type id: UUID
+    :param command_id: The command this entry describes. Foreign key to ``gs.commands.id``. Both
+        tables live in the same schema, so this one can use SQLModel's ``foreign_key=`` together with
+        :func:`app.database.utils.to_foreign_key_value`, rather than the ``Column(...)`` workaround
+        that :attr:`Command.type_` needs
+    :type command_id: UUID
+    :param status: The status the command held when the entry was written
+    :type status: CommandStatus
+    :param params: The command's serialized params at that point. Optional, as on :class:`Command`
+    :type params: str | None
+    :param created_at: When the entry was written. Timezone-aware and defaulted by the database, as
+        on :class:`Command`
+    :type created_at: datetime
+
+    :note: ``table=False`` keeps this class out of ``SQLModel.metadata``, which is what Alembic
+        compares against the database. Until it is flipped, ``--autogenerate`` cannot see this model
+        and will report "No changes in schema detected" rather than failing.
+
+    :todo: Implement the fields above, set ``table=True``, and add the table information block the
+        other models have: a ``COMMAND_HISTORY_TABLE_NAME`` constant for ``__tablename__``, and
+        ``__table_args__`` carrying ``{"schema": SCHEMA_NAME}``. The schema is not optional; without
+        it the table is created outside "gs" and migrations/env.py filters it back out. Then generate
+        the migration with ``uv run alembic revision --autogenerate -m "<msg>"``.
+    """
+
+    # TODO: Implement this stub!
