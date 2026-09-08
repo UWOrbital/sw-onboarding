@@ -1,4 +1,7 @@
-def main():
+def main() -> None:
+    """
+    This script seeds data into the PostgreSQL database for onboarding purposes.
+    """
     print("Seeded onboarding data.")
 
 

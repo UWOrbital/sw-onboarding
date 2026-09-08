@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.config.backend_setup import setup_logging, setup_middlewares, setup_routes
 
-@app.get("/main-commands")
-async def get_all_commands():
-    return {"message": "Hello World"}
+app = FastAPI()
+setup_logging()
+setup_routes(app)
+setup_middlewares(app)

@@ -74,7 +74,7 @@ ok "Frontend dependencies installed"
 
 # 5. Verification
 info "Verifying backend boots and responds..."
-uv run fastapi dev "$BACKEND_DIR/main.py" --port 8001 >/tmp/sw-onboarding-backend.log 2>&1 &
+uv run fastapi dev "$BACKEND_DIR/main.py" --port 8001 >/tmp/sw-onboarding-log 2>&1 &
 BACKEND_PID=$!
 
 cleanup() {
@@ -90,7 +90,7 @@ until curl -sf http://localhost:8001/main-commands/ >/dev/null 2>&1; do
   CHECK_ATTEMPTS=$((CHECK_ATTEMPTS + 1))
   if [ "$CHECK_ATTEMPTS" -gt 10 ]; then
     echo "---- backend log ----"
-    cat /tmp/sw-onboarding-backend.log || true
+    cat /tmp/sw-onboarding-log || true
     fail "Backend did not respond at http://localhost:8001/main-commands/. See log above."
   fi
   sleep 1
