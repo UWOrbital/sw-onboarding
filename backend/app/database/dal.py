@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Any, TypeVar, cast
 
 from app.database.abstract_repository import AbstractRepository
-from app.database.repositories import CommandsRepository, MainCommandRepository
+from app.database.repositories import CommandHistoryRepository, CommandsRepository, MainCommandRepository
 
 R = TypeVar("R", bound=AbstractRepository[Any, Any])
 
@@ -25,6 +25,7 @@ class DAL:
 
     main_commands = MainCommandRepository
     commands = CommandsRepository
+    command_history = CommandHistoryRepository
 
     # Cache of provider callables keyed by repository class. FastAPI keys
     # dependency_overrides by callable identity, so get_repo must return the

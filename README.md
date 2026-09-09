@@ -16,9 +16,6 @@ Frontend on :5175
 - backend
     - add stubs for onboarders to implement
         - add route function stub for commands PATCH method
-        - add model stub for `CommandHistory` audit table
-            - indicate making migration with alembic (`alembic revision --autogenerate -m "<msg>"`)
-        - add repository stub for audit model, wiring into `DAL`
         - add indicators to refactor existing commands routes to write to new audit model
         - add route function stubs for command history GET method
     - write pytests for testing onboarder code
