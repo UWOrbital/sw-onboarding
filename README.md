@@ -16,7 +16,6 @@ Frontend on :5175
 - backend
     - add stubs for onboarders to implement
         - add indicators to refactor existing commands routes to write to new audit model
-        - add schema stubs for route stubs
     - write pytests for testing onboarder code
     - update `scripts/seed_onboarding_data.py` inject ~50 random commands into DB
 - frontend

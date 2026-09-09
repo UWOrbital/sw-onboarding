@@ -78,6 +78,7 @@ async def update_command(
     :return: The updated command entry.
     """
     # TODO: Implement this stub!
+    return CommandResponse(data=None)
 
 
 @commands_router.delete("/{command_id}")

@@ -26,3 +26,10 @@ class CommandHistoryRepository(AbstractRepository[CommandHistory, UUID]):
     """
 
     model = CommandHistory
+
+    async def get_history_by_id(self, command_id: UUID) -> list[CommandHistory]:
+        """
+        Get the entire history of a command by its UUID, sorted by latest first.
+        """
+        # TODO: Implement this stub!
+        return []

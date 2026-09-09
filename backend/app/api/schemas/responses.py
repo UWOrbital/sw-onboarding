@@ -5,7 +5,13 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 
 from app.database.enums import CommandStatus
-from app.database.models import MainCommand
+from app.database.models import CommandHistory, MainCommand
+
+
+class CommandHistoryResponse(BaseModel):
+    """Response model wrapping a list of CommandHistory objects."""
+
+    data: Annotated[list[CommandHistory], Field(description="A list containing CommandHistory objects")]
 
 
 class CommandItem(BaseModel):
