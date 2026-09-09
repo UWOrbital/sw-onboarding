@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI
 from loguru import logger
 
+from app.api.routes.command_history import command_history_router
 from app.api.routes.commands import commands_router
 from app.api.routes.main_commands import main_commands_router
 from app.config.env_settings.cors_config import add_cors_middleware
@@ -13,6 +14,7 @@ def setup_routes(app: FastAPI) -> None:
     base_prefix = "/api"
 
     app.include_router(commands_router, prefix=f"{base_prefix}/commands")
+    app.include_router(command_history_router, prefix=f"{base_prefix}/commands")
     app.include_router(main_commands_router, prefix=f"{base_prefix}/main-commands")
 
 

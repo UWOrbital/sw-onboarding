@@ -9,7 +9,7 @@ from app.api.schemas.responses import CommandResponse, CommandsResponse, DeleteC
 from app.database.dal import DAL
 from app.database.repositories import CommandsRepository
 
-commands_router = APIRouter(tags=["MCC", "Commands"])
+commands_router = APIRouter(tags=["Commands"])
 
 CommandsRepo = Annotated[CommandsRepository, Depends(DAL.get_repo(DAL.commands))]
 
@@ -23,6 +23,22 @@ async def get_commands(commands: CommandsRepo) -> CommandsResponse:
     :return: All command entries.
     """
     return CommandsResponse(data=await commands.get_all())
+
+
+@commands_router.get("/{command_id}")
+async def get_command(command_id: UUID, commands: CommandsRepo) -> CommandResponse:
+    """
+    Retrieve a single command by ID.
+
+    :param command_id: UUID of the command to retrieve.
+    :param commands: injected Command repository.
+    :return: The matching command entry.
+    """
+    try:
+        command = await commands.get_by_id(command_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+    return CommandResponse(data=command)
 
 
 @commands_router.post("/")
@@ -47,22 +63,6 @@ async def create_command(
     return CommandResponse(data=created_command)
 
 
-@commands_router.get("/{command_id}")
-async def get_command(command_id: UUID, commands: CommandsRepo) -> CommandResponse:
-    """
-    Retrieve a single command by ID.
-
-    :param command_id: UUID of the command to retrieve.
-    :param commands: injected Command repository.
-    :return: The matching command entry.
-    """
-    try:
-        command = await commands.get_by_id(command_id)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e)) from e
-    return CommandResponse(data=command)
-
-
 @commands_router.patch("/{command_id}")
 async def update_command(
     command_id: UUID,
@@ -77,15 +77,7 @@ async def update_command(
     :param commands: injected Command repository.
     :return: The updated command entry.
     """
-    updates = request.model_dump(exclude_none=True)
-    if not updates:
-        raise HTTPException(status_code=422, detail="At least one field must be provided to update")
-    try:
-        await commands.get_by_id(command_id)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e)) from e
-    updated_command = await commands.update(command_id, updates)
-    return CommandResponse(data=updated_command)
+    # TODO: Implement this stub!
 
 
 @commands_router.delete("/{command_id}")

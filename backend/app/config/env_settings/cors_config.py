@@ -5,10 +5,11 @@ from pydantic_settings import BaseSettings
 
 class CORSConfig(BaseSettings):
     """
-    Pydantic class for storing CORS middleware configuration settings
+    Pydantic class for pulling/storing CORS middleware configuration settings.
+    Check `.env.example` for expected .env keys.
     """
 
-    ...
+    # TODO: Implement this stub!
 
 
 def add_cors_middleware(app: FastAPI) -> None:
