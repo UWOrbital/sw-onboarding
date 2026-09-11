@@ -1,4 +1,5 @@
 import Background from "./components/Background";
+import CommandHistoryPage from "./pages/CommandHistory";
 
 /**
  * @brief App component displaying the main application
@@ -9,7 +10,7 @@ function App() {
       <>
         <Background />
         <div className="pt-16">
-          {/* <Commands /> */}
+          <CommandHistoryPage />
         </div>
       </>
   );
