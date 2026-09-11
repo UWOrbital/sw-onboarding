@@ -15,7 +15,6 @@ Frontend on :5175
     - add workflow for pre-commit, frontend linting and formatting
 - backend
     - write pytests for testing onboarder code
-    - update `scripts/seed_onboarding_data.py` inject ~50 random commands into DB
 - frontend
     - copy over table stubs from original GS onboarding
     - add stub for onboarder to write command history display

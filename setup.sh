@@ -64,7 +64,7 @@ uv run alembic upgrade head
 ok "Migrations applied"
 
 info "Seeding challenge data..."
-uv run python -m scripts.seed_onboarding_data
+(cd "$BACKEND_DIR" && uv run python -m scripts.seed_onboarding_data)
 ok "Seed data loaded"
 
 # 4. Frontend
