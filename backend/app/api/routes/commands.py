@@ -77,8 +77,7 @@ async def update_command(
     :param commands: injected Command repository.
     :return: The updated command entry.
     """
-    # TODO: Implement this stub!
-    # TODO: wire CommandHistory table appending into this route!
+    # TODO: Implement this stub and wire CommandHistory table appending into this route!
     return CommandResponse(data=None)
 
 
