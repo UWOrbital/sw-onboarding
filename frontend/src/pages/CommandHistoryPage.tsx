@@ -16,9 +16,11 @@ const columns = [
 function CommandHistoryPage() {
   // TODO: Fetch the command history with useCommandHistory and pass the resulting
   // CommandHistory[] directly to the Table component.
+  //
+  // The page must provide a way for the user to select which command's audit log they want to view.
+  // The selected command should determine which command history is fetched.
   // The table should communicate that this is an audit log.
   // The table should be centred on the page.
-  // A command may appear in multiple rows as its state changes over time.
 }
 
 export default CommandHistoryPage;

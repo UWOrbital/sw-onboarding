@@ -115,5 +115,5 @@ ok "Backend responded successfully"
 
 echo
 ok "Setup complete."
-echo "Start the backend: uv run fastapi dev backend/main.py"
+echo "Start the backend: uv run fastapi dev backend/main.py --port 8001"
 echo "Start the frontend: cd frontend && npm run dev"
