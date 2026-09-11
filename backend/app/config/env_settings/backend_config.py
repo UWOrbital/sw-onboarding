@@ -1,5 +1,3 @@
-# TODO:(335) Improve loading the configuration
-
 from dotenv import load_dotenv
 
 from app.config.env_settings.cors_config import CORSConfig

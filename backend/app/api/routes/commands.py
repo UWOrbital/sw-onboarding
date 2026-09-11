@@ -53,7 +53,7 @@ async def create_command(
     :param commands: injected Command repository.
     :return: The newly created command.
     """
-
+    # TODO: wire CommandHistory table appending into this route!
     created_command = await commands.create(
         {
             "type_": request.type_,
@@ -78,6 +78,7 @@ async def update_command(
     :return: The updated command entry.
     """
     # TODO: Implement this stub!
+    # TODO: wire CommandHistory table appending into this route!
     return CommandResponse(data=None)
 
 
@@ -93,6 +94,7 @@ async def delete_command(
     :param commands: injected Command repository.
     :return: Confirmation message with the deleted command ID.
     """
+    # TODO: wire CommandHistory table appending into this route!
     try:
         await commands.get_by_id(command_id)
     except ValueError as e:

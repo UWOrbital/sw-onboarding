@@ -18,6 +18,7 @@ def add_cors_middleware(app: FastAPI) -> None:
 
     :param app: FastAPI app to add the middleware to
     """
+    # TODO: Update this function to properly attach the CORS middleware.
     cors_settings = CORSConfig()
     print(f"CORSConfig not implemented. ({cors_settings})")
     app.add_middleware(

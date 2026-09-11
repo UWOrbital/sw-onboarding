@@ -14,8 +14,6 @@ Frontend on :5175
     - add workflow for frontend testing
     - add workflow for pre-commit, frontend linting and formatting
 - backend
-    - add stubs for onboarders to implement
-        - add indicators to refactor existing commands routes to write to new audit model
     - write pytests for testing onboarder code
     - update `scripts/seed_onboarding_data.py` inject ~50 random commands into DB
 - frontend
