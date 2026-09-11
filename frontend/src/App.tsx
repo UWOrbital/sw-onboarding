@@ -1,5 +1,5 @@
 import Background from "./components/Background";
-import CommandHistoryPage from "./pages/CommandHistory";
+import CommandHistoryPage from "./pages/CommandHistoryPage";
 
 /**
  * @brief App component displaying the main application

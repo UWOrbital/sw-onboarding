@@ -13,7 +13,7 @@ const columns = [
  * @brief CommandHistory component displaying the audit log table
  * @return tsx element of CommandHistory component
  */
-function CommandHistory() {
+function CommandHistoryPage() {
   // TODO: Fetch the command history with useCommandHistory and pass the resulting
   // CommandHistory[] directly to the Table component.
   // The table should communicate that this is an audit log.
@@ -21,4 +21,4 @@ function CommandHistory() {
   // A command may appear in multiple rows as its state changes over time.
 }
 
-export default CommandHistory;
+export default CommandHistoryPage;
