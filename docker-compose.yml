@@ -4,11 +4,11 @@ services:
     container_name: sw-onboarding-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: onboarding
-      POSTGRES_PASSWORD: onboarding
-      POSTGRES_DB: sw_onboarding
+      POSTGRES_USER: ${GS_DATABASE_USER}
+      POSTGRES_PASSWORD: ${GS_DATABASE_PASSWORD}
+      POSTGRES_DB: ${GS_DATABASE_NAME}
     ports:
-      - "5433:5432"
+      - "${GS_DATABASE_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
