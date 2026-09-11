@@ -59,6 +59,10 @@ info "Installing backend dependencies (uv sync)..."
 uv sync
 ok "Backend dependencies installed"
 
+info "Installing pre-commit hooks..."
+uv run pre-commit install
+ok "Pre-commit hooks installed"
+
 info "Running database migrations (alembic upgrade head)..."
 uv run alembic upgrade head
 ok "Migrations applied"
