@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class CORSConfig(BaseSettings):
@@ -9,6 +9,7 @@ class CORSConfig(BaseSettings):
     Check ``template.env`` for expected .env keys.
     """
 
+    model_config = SettingsConfigDict(env_prefix="CORS_")
     # TODO: Implement this stub!
 
 
