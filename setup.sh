@@ -39,7 +39,19 @@ fi
 
 ok "All prerequisites found (uv, node $(node -v), docker compose)"
 
-# 2. Postgres
+# 2. Env file
+info "Checking .env..."
+if [ ! -f "$REPO_ROOT/.env" ]; then
+  if [ ! -f "$REPO_ROOT/template.env" ]; then
+    fail "template.env is missing. Did you clone the repo properly?"
+  fi
+  cp "$REPO_ROOT/template.env" "$REPO_ROOT/.env"
+  ok "Created .env from template.env"
+else
+  ok ".env already exists, leaving it as-is"
+fi
+
+# 3. Postgres
 info "Starting Postgres..."
 docker compose up -d postgres
 
@@ -54,7 +66,7 @@ until [ "$(docker inspect -f '{{.State.Health.Status}}' sw-onboarding-db 2>/dev/
 done
 ok "Postgres is up and healthy"
 
-# 3. Backend
+# 4. Backend
 info "Installing backend dependencies (uv sync)..."
 uv sync
 ok "Backend dependencies installed"
@@ -67,12 +79,12 @@ info "Seeding challenge data..."
 (cd "$BACKEND_DIR" && uv run python -m scripts.seed_onboarding_data)
 ok "Seed data loaded"
 
-# 4. Frontend
+# 5. Frontend
 info "Installing frontend dependencies (npm install)..."
 (cd "$FRONTEND_DIR" && npm install)
 ok "Frontend dependencies installed"
 
-# 5. Verification
+# 6. Verification
 info "Verifying backend boots and responds..."
 uv run fastapi dev "$BACKEND_DIR/main.py" --port 8001 >/tmp/sw-onboarding-log 2>&1 &
 BACKEND_PID=$!
@@ -86,12 +98,12 @@ cleanup() {
 trap cleanup EXIT
 
 CHECK_ATTEMPTS=0
-until curl -sf http://localhost:8001/main-commands/ >/dev/null 2>&1; do
+until curl -sf http://localhost:8001/api/main-commands/ >/dev/null 2>&1; do
   CHECK_ATTEMPTS=$((CHECK_ATTEMPTS + 1))
   if [ "$CHECK_ATTEMPTS" -gt 10 ]; then
     echo "---- backend log ----"
     cat /tmp/sw-onboarding-log || true
-    fail "Backend did not respond at http://localhost:8001/main-commands/. See log above."
+    fail "Backend did not respond at http://localhost:8001/api/main-commands/. See log above."
   fi
   sleep 1
 done
