@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings
 class CORSConfig(BaseSettings):
     """
     Pydantic class for pulling/storing CORS middleware configuration settings.
-    Check `.env.example` for expected .env keys.
+    Check ``template.env`` for expected .env keys.
     """
 
     # TODO: Implement this stub!
