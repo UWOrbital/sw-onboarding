@@ -11,6 +11,22 @@ jobs:
       matrix:
         python-version: ["3.12"]
 
+    # Same image, credentials, and host port as docker-compose.yml, so the env below is unchanged.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: onboarding
+          POSTGRES_PASSWORD: onboarding
+          POSTGRES_DB: sw_onboarding
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U onboarding -d sw_onboarding"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+
     steps:
       - uses: actions/checkout@v3
 
