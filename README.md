@@ -7,7 +7,7 @@ The goal of this onboarding challenge is to implement an audit log for commands 
 
 This challenge will teach you the skills needed for full-stack development on our design team. It's designed to be similar to the type of work you'd do on the team (and co-op) and will give you a deeper understanding of web development.
 
-This onboarding challenge may be harder than that of other design teams. We expect members to struggle at various points of this challenge. Don't be afraid to ask questions about the onboarding process in the #sw-onboarding channel on Discord. It's very important to us that you're able to ask questions when you don't understand something.
+**This onboarding challenge is difficult!** It may be much harder than that of other design teams. We expect members to struggle at various points of this challenge. Don't be afraid to ask questions about the onboarding process in the #sw-onboarding channel on Discord. It's very important to us that you're able to ask questions when you don't understand something.
 
 Once you complete this challenge, you'll be ready to join the Software team.
 
@@ -77,6 +77,14 @@ The frontend portion requires you to:
    - Handle loading and error states appropriately.
 
 During development, the backend should run on port `8001` and the frontend on port `5175`.
+
+Start the backend with `uv run fastapi dev backend/main.py --port 8001`.
+
+Start the frontend with `cd frontend && npm run dev`.
+
+Run backend tests with `uv run pytest`.
+
+Run frontend tests with `cd frontend && npx vitest run`.
 
 You are expected to explore the existing codebase and understand how the existing command functionality works before implementing the feature. There may be parts of the codebase that are unfamiliar to you, which is okay!
 
