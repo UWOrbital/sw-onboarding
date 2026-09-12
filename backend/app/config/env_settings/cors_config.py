@@ -7,10 +7,16 @@ class CORSConfig(BaseSettings):
     """
     Pydantic class for pulling/storing CORS middleware configuration settings.
     Check ``template.env`` for expected .env keys.
+
+    Defaults are the closed configuration: no origins allowed, no credentials.
     """
 
-    model_config = SettingsConfigDict(env_prefix="CORS_")
-    # TODO: Implement this stub!
+    model_config = SettingsConfigDict(env_prefix="CORS_", extra="ignore")
+
+    allow_origins: list[str] = []
+    allow_credentials: bool = False
+    allow_method: list[str] = ["*"]  # singular, to match CORS_ALLOW_METHOD in template.env
+    allow_headers: list[str] = ["*"]
 
 
 def add_cors_middleware(app: FastAPI) -> None:
@@ -19,9 +25,11 @@ def add_cors_middleware(app: FastAPI) -> None:
 
     :param app: FastAPI app to add the middleware to
     """
-    # TODO: Update this function to properly attach the CORS middleware.
     cors_settings = CORSConfig()
-    print(f"CORSConfig not implemented. ({cors_settings})")
     app.add_middleware(
         CORSMiddleware,
+        allow_origins=cors_settings.allow_origins,
+        allow_credentials=cors_settings.allow_credentials,
+        allow_methods=cors_settings.allow_method,
+        allow_headers=cors_settings.allow_headers,
     )

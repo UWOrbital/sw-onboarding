@@ -17,9 +17,8 @@ async def get_command_history(command_id: UUID, command_history: CommandHistoryR
     """
     Retrieve a command's history by ID using the `CommandHistoryRepo`'s concrete method.
 
-    :param command_id: UUID of the command to retrieve.
-    :param commands: injected Command repository.
-    :return: The matching command entry.
+    :param command_id: UUID of the command whose history to retrieve.
+    :param command_history: injected CommandHistory repository.
+    :return: The command's history entries, latest first. Empty if the command has none.
     """
-    # TODO: Implement this stub!
-    return CommandHistoryResponse(data=[])
+    return CommandHistoryResponse(data=await command_history.get_history_by_id(command_id))

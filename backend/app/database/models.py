@@ -15,6 +15,7 @@ SCHEMA_NAME: Final[str] = "gs"
 # Table names in database
 MAIN_COMMAND_TABLE_NAME: Final[str] = "main_commands"
 COMMANDS_TABLE_NAME: Final[str] = "commands"
+COMMAND_HISTORY_TABLE_NAME: Final[str] = "command_history"
 
 MainTableID = int
 MainTableIDDatabase = Integer
@@ -96,7 +97,7 @@ class Command(SQLModel, table=True):
     )  # Since the table is in a different schema sqlmodel can't find the table normally
 
 
-class CommandHistory(SQLModel, table=False):
+class CommandHistory(SQLModel, table=True):
     """
     Audit log of every change made to a Command.
 
@@ -105,29 +106,29 @@ class CommandHistory(SQLModel, table=False):
     even when the command they describe is.
 
     :param id: Audit entry ID. Generated per row, as on :class:`Command`
-    :type id: UUID
-    :param command_id: The command this entry describes. Foreign key to ``gs.commands.id``. Both
-        tables live in the same schema, so this one can use SQLModel's ``foreign_key=`` together with
-        :func:`app.database.utils.to_foreign_key_value`, rather than the ``Column(...)`` workaround
-        that :attr:`Command.type_` needs
-    :type command_id: UUID
+    :param command_id: The command this entry describes. Not a database-level foreign key on purpose:
+        a foreign key would either block deleting the command (RESTRICT), erase its history (CASCADE),
+        or erase the link (SET NULL), and all three break "preserve history after deletion". The column
+        is indexed because every read is a lookup by command
     :param status: The status the command held when the entry was written
-    :type status: CommandStatus
     :param params: The command's serialized params at that point. Optional, as on :class:`Command`
-    :type params: str | None
     :param created_at: When the entry was written. Timezone-aware and defaulted by the database, as
         on :class:`Command`
-    :type created_at: datetime
-
-    :note: ``table=False`` keeps this class out of ``SQLModel.metadata``, which is what Alembic
-        compares against the database. Until it is flipped, ``--autogenerate`` cannot see this model
-        and will report "No changes in schema detected" rather than failing.
-
-    :todo: Implement the fields above, set ``table=True``, and add the table information block the
-        other models have: a ``COMMAND_HISTORY_TABLE_NAME`` constant for ``__tablename__``, and
-        ``__table_args__`` carrying ``{"schema": SCHEMA_NAME}``. The schema is not optional; without
-        it the table is created outside "gs" and migrations/env.py filters it back out. Then generate
-        the migration with ``uv run alembic revision --autogenerate -m "<msg>"``.
     """
 
-    # TODO: Implement this stub!
+    id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
+    command_id: UUID = Field(index=True)
+    status: CommandStatus
+    params: str | None = None
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(UTC),
+        sa_column=Column(
+            DateTime(timezone=True),
+            server_default=func.now(),
+            nullable=False,
+        ),
+    )
+
+    # table information
+    __tablename__ = COMMAND_HISTORY_TABLE_NAME
+    __table_args__ = {"schema": SCHEMA_NAME}
