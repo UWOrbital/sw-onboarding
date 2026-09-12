@@ -7,12 +7,12 @@ import CommandHistoryPage from "./pages/CommandHistoryPage";
  */
 function App() {
   return (
-      <>
-        <Background />
-        <div className="pt-16">
-          <CommandHistoryPage />
-        </div>
-      </>
+    <>
+      <Background />
+      <div className="pt-16">
+        <CommandHistoryPage />
+      </div>
+    </>
   );
 }
 
