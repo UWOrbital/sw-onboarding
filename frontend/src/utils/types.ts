@@ -23,5 +23,5 @@ export interface MainCommand {
 }
 
 export interface CommandHistory {
-  // TODO: Implement this stub!
+  // TODO: (STEP 7) Implement this stub!
 }

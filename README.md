@@ -58,21 +58,23 @@ The completed feature should allow a user to:
 
 ### Backend
 The backend portion requires you to:
-- Implement the `CommandHistory` database model.
-- Create the necessary database migration.
-- Implement the `CommandHistoryRepository`.
-- Record history when commands are created, updated, or deleted.
-- Implement the command history and complete the command update endpoint.
-- Configure CORS so that the frontend can communicate with the backend during local development.
 
+1. **Implement the `CommandHistory` database model** (`backend/app/database/models.py`), then create the necessary database migration with Alembic (see the model's docstring for the command).
+2. **Implement the `CommandHistoryRepository`** (`backend/app/database/repositories.py`).
+3. **Implement the command history endpoint** (`backend/app/api/routes/command_history.py`).
+4. **Complete the command update endpoint** (`backend/app/api/routes/commands.py`).
+5. **Record history when commands are created, updated, or deleted** by wiring `CommandHistory` appending into the create, update, and delete routes (`backend/app/api/routes/commands.py`).
+6. **Configure CORS** so that the frontend can communicate with the backend during local development (`backend/app/config/env_settings/cors_config.py`).
 
 ### Frontend
 The frontend portion requires you to:
-- Implement the command history API hook using React Query.
-- Display the command history in the provided Table component.
-- Display the relevant information for each history entry.
-- Include a way for the user to select which command's audit log they want to view.
-- Handle loading and error states appropriately.
+
+7. **Define the `CommandHistory` type** (`frontend/src/utils/types.ts`).
+8. **Implement the command history API hook** using React Query (`frontend/src/hooks/useCommandHistory.ts`).
+9. **Build the command history page** (`frontend/src/pages/CommandHistoryPage.tsx`):
+   - Define the table columns and display the relevant information for each history entry in the provided Table component.
+   - Include a way for the user to select which command's audit log they want to view.
+   - Handle loading and error states appropriately.
 
 During development, the backend should run on port `8001` and the frontend on port `5175`.
 

@@ -130,4 +130,4 @@ class CommandHistory(SQLModel, table=False):
         the migration with ``uv run alembic revision --autogenerate -m "<msg>"``.
     """
 
-    # TODO: Implement this stub!
+    # TODO: (STEP 1) Implement this stub!
