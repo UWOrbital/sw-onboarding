@@ -76,6 +76,9 @@ async def update_command(
     :param request: Fields to overwrite; omitted fields are left unchanged.
     :param commands: injected Command repository.
     :return: The updated command entry.
+    :raises HTTPException: 404 if the command does not exist.
+    :raises HTTPException: 422 if the repository rejects the update, e.g. a value of the wrong type or a
+        ``type_`` that is not an existing main command. A rejected update leaves the command unchanged.
     """
     # TODO: (STEP 3) Implement this stub!
     # TODO: (STEP 4) Wire CommandHistory table appending into this route!
