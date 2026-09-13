@@ -6,7 +6,7 @@ import { useCommandHistory } from "../hooks/useCommandHistory";
 const columnHelper = createColumnHelper<CommandHistory>();
 
 const columns = [
-  // TODO: (STEP 9) Define the columns needed for the CommandHistory table.
+  // TODO: (STEP 8) Define the columns needed for the CommandHistory table.
 ];
 
 /**
@@ -14,7 +14,7 @@ const columns = [
  * @return tsx element of CommandHistory component
  */
 function CommandHistoryPage() {
-  // TODO: (STEP 9) Fetch the command history with useCommandHistory and pass the resulting
+  // TODO: (STEP 8) Fetch the command history with useCommandHistory and pass the resulting
   // CommandHistory[] directly to the Table component.
   //
   // The page must provide a way for the user to select which command's audit log they want to view.

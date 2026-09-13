@@ -21,5 +21,5 @@ async def get_command_history(command_id: UUID, command_history: CommandHistoryR
     :param commands: injected Command repository.
     :return: The matching command entry.
     """
-    # TODO: (STEP 3) Implement this stub!
+    # TODO: (STEP 2) Implement this stub!
     return CommandHistoryResponse(data=[])
