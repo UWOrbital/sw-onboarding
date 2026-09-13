@@ -31,5 +31,5 @@ class CommandHistoryRepository(AbstractRepository[CommandHistory, UUID]):
         """
         Get the entire history of a command by its UUID, sorted by latest first.
         """
-        # TODO: (STEP 2) Implement this stub!
+        # TODO: (STEP 1) Implement this stub!
         return []
