@@ -61,7 +61,10 @@ The backend portion requires you to:
 
 1. **Implement the `CommandHistoryRepository`** (`backend/app/database/repositories.py`).
 2. **Implement the command history endpoint** (`backend/app/api/routes/command_history.py`).
+   - Return `404` if the command has no history entries. A command that has been deleted still has history, so check the history table, not the commands table.
 3. **Complete the command update endpoint** (`backend/app/api/routes/commands.py`).
+   - Return `404` if the command does not exist.
+   - Return `422` if the repository rejects the update, e.g. a value of the wrong type or a `type_` that is not an existing main command. A rejected update must leave the command unchanged.
 4. **Record history when commands are created, updated, or deleted** by wiring `CommandHistory` appending into the create, update, and delete routes (`backend/app/api/routes/commands.py`).
 5. **Configure CORS** so that the frontend can communicate with the backend during local development (`backend/app/config/env_settings/cors_config.py`).
 
