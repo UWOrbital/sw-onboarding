@@ -28,10 +28,9 @@ async def test_get_history_returns_entries_latest_first(client: httpx.AsyncClien
     assert data[0]["created_at"] > data[1]["created_at"]
 
 
-async def test_unknown_command_returns_empty_list(client: httpx.AsyncClient) -> None:
+async def test_unknown_command_is_404(client: httpx.AsyncClient) -> None:
     response = await client.get(f"/api/commands/{uuid4()}/history")
-    assert response.status_code == 200
-    assert response.json()["data"] == []
+    assert response.status_code == 404
 
 
 async def test_invalid_id_is_422(client: httpx.AsyncClient) -> None:

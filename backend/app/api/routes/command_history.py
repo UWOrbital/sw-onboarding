@@ -18,8 +18,10 @@ async def get_command_history(command_id: UUID, command_history: CommandHistoryR
     Retrieve a command's history by ID using the `CommandHistoryRepo`'s concrete method.
 
     :param command_id: UUID of the command to retrieve.
-    :param commands: injected Command repository.
-    :return: The matching command entry.
+    :param command_history: injected CommandHistory repository.
+    :return: The command's history entries, latest first.
+    :raises HTTPException: 404 if the command has no history entries. A deleted command still has
+        history, so check the history table, not the commands table.
     """
     # TODO: (STEP 2) Implement this stub!
     return CommandHistoryResponse(data=[])

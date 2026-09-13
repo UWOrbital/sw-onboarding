@@ -47,4 +47,4 @@ async def test_delete_records_final_state_and_keeps_history(client: httpx.AsyncC
 async def test_failed_update_records_nothing(client: httpx.AsyncClient) -> None:
     command_id = uuid4()
     assert (await client.patch(f"/api/commands/{command_id}", json={"status": "failed"})).status_code == 404
-    assert await history(client, command_id) == []
+    assert (await client.get(f"/api/commands/{command_id}/history")).status_code == 404
