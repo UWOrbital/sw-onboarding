@@ -14,7 +14,7 @@ from app.database.repositories import CommandHistoryRepository, CommandsReposito
 commands_router = APIRouter(tags=["Commands"])
 
 CommandsRepo = Annotated[CommandsRepository, Depends(DAL.get_repo(DAL.commands))]
-CommandHistoryRepo = Annotated[CommandHistoryRepository, Depends(DAL.get_repo(DAL.command_history))]
+CommandHistoryRepo = Annotated[CommandHistoryRepository | None, Depends(DAL.get_repo(DAL.command_history))]
 
 
 def to_history_entry(obj: Command) -> dict[str, Any]:
@@ -62,28 +62,24 @@ async def get_command(command_id: UUID, commands: CommandsRepo) -> CommandRespon
 async def create_command(
     request: CreateCommandRequest,
     commands: CommandsRepo,
-    command_history: CommandHistoryRepo,
+    command_history: CommandHistoryRepo = None,
 ) -> CommandResponse:
     """
     Create a new command entry with status set to pending.
 
     :param request: Typed fields identifying the command type, session, and optional parameters.
     :param commands: injected Command repository.
-    :param command_history: injected Command History repository.
+    :param command_history: optional injected Command History repository.
     :return: The newly created command.
     """
-    try:
-        created_command = await commands.create(
-            {
-                "type_": request.type_,
-                "params": request.params,
-            }
-        )
-    except IntegrityError as e:
-        message = "Creation failed: FK type_ must be an existing main command"
-        raise HTTPException(status_code=422, detail=message) from e
-
-    await command_history.create(to_history_entry(created_command))
+    created_command = await commands.create(
+        {
+            "type_": request.type_,
+            "params": request.params,
+        }
+    )
+    if command_history is not None:
+        await command_history.create(to_history_entry(created_command))
     return CommandResponse(data=created_command)
 
 
@@ -92,7 +88,7 @@ async def update_command(
     command_id: UUID,
     request: UpdateCommandRequest,
     commands: CommandsRepo,
-    command_history: CommandHistoryRepo,
+    command_history: CommandHistoryRepo = None,
 ) -> CommandResponse:
     """
     Partially update a command's status, type, or parameters.
@@ -100,7 +96,7 @@ async def update_command(
     :param command_id: UUID of the command to update.
     :param request: Fields to overwrite; omitted fields are left unchanged.
     :param commands: injected Command repository.
-    :param command_history: injected Command History repository.
+    :param command_history: optional injected Command History repository.
     :return: The updated command entry.
     :raises HTTPException: 404 if the command does not exist.
     :raises HTTPException: 422 if the repository rejects the update, e.g. a value of the wrong type or a
@@ -118,7 +114,8 @@ async def update_command(
     except IntegrityError as e:
         message = "Update failed: FK type_ must be an existing main command, some values cannot be null"
         raise HTTPException(status_code=422, detail=message) from e
-    await command_history.create(to_history_entry(obj))
+    if command_history is not None:
+        await command_history.create(to_history_entry(obj))
     return CommandResponse(data=obj)
 
 
@@ -126,14 +123,14 @@ async def update_command(
 async def delete_command(
     command_id: UUID,
     commands: CommandsRepo,
-    command_history: CommandHistoryRepo,
+    command_history: CommandHistoryRepo = None,
 ) -> DeleteCommandResponse:
     """
     Delete a command by ID.
 
     :param command_id: UUID of the command to delete.
     :param commands: injected Command repository.
-    :param command_history: injected Command History repository.
+    :param command_history: optional injected Command History repository.
     :return: Confirmation message with the deleted command ID.
     """
     try:
@@ -141,5 +138,6 @@ async def delete_command(
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e)) from e
     obj = await commands.delete_by_id(command_id)
-    await command_history.create(to_history_entry(obj))
+    if command_history is not None:
+        await command_history.create(to_history_entry(obj))
     return DeleteCommandResponse(message=f"Command {command_id} deleted successfully")
