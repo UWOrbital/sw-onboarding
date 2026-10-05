@@ -23,5 +23,8 @@ export interface MainCommand {
 }
 
 export interface CommandHistory {
-  // TODO: (STEP 6) Implement this stub!
+  id: number;
+  status: CommandStatus;
+  params: string | null;
+  created_at: string;
 }

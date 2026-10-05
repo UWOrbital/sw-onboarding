@@ -53,4 +53,6 @@ class MainCommandsResponse(BaseModel):
 class MainCommandResponse(BaseModel):
     """Response model wrapping a single MainCommand."""
 
+    # extends the base model from pydantic, which includes initialization through the defined class-level attributes
+    # pydantic also provides validation and serialization/deserialization capabilities for the model
     data: Annotated[MainCommand, Field(description="The retrieved MainCommand object")]

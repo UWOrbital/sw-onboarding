@@ -10,11 +10,17 @@ T = TypeVar("T", bound=SQLModel)
 PK = TypeVar("PK", int, UUID)
 
 
+# abstact class (ABC)
+# the [] notation is used to specify that the class is generic and can be parameterized with different types
+# in this case, T is the type of the model and PK is the type of the primary key
+# stores all data respositories
 class AbstractRepository[T, PK](ABC):
     """
     An Abstract Base Class for all data repositories.
     """
 
+    # the class T itself, not an instance of T, is stored in the model attribute. This allows the repository
+    # to know which SQLModel subclass it is working with.
     model: type[T]
     uneditable_fields: set[str] = {"id"}
 
