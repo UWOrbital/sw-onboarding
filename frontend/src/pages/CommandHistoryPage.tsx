@@ -70,9 +70,7 @@ function CommandHistoryPage() {
 
       {isLoading && <p className="text-foreground">Loading history</p>}
       {isError && (
-        <p className="text-foreground">
-          Couldn't load: {error.message}
-        </p>
+        <p className="text-foreground">Couldn't load: {error.message}</p>
       )}
       {!isLoading && !isError && <Table data={data ?? []} columns={columns} />}
       {selectedId !== "" && !isLoading && !isError && data?.length === 0 && (
