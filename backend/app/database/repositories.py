@@ -34,7 +34,7 @@ class CommandHistoryRepository(AbstractRepository[CommandHistory, UUID]):
         """
         Get the entire history of a command by its UUID, sorted by latest first.
         """
-        # TODO: Implemented
+
         async with get_db_session() as session:
             return list(
                 (
