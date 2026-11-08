@@ -22,10 +22,7 @@ const columns = [
     header: "Timestamp",
     cell: (info) => new Date(info.getValue()).toLocaleString(),
   }),
-
 ]; //uses the existing tanstack table helper?
-
-
 
 /**
  * @brief CommandHistory component displaying the audit log table
@@ -44,7 +41,6 @@ function CommandHistoryPage() {
   const [commands, setCommands] = useState<Command[]>([]);
   const [selectedCommandId, setSelectedCommandId] = useState("");
   const [commandsError, setCommandsError] = useState(false);
-
 
   const historyQuery = useCommandHistory(selectedCommandId);
 
@@ -71,11 +67,10 @@ function CommandHistoryPage() {
   // return react jsx
   // needs the heading identifying the audit log, the <select> for
   // choosing a command, the loading/error message, the table
-    return (
-      <main className="flex flex-col items-center gap-6 px-6">
+  return (
+    <main className="flex flex-col items-center gap-6 px-6">
       <h1 className="text-2xl font-semibold">Command Audit Log</h1>
       <label className="flex flex-col gap-2">
-
         <span>Select a command</span>
         <select
           value={selectedCommandId}
@@ -86,7 +81,7 @@ function CommandHistoryPage() {
           {commands.map((command) => (
             <option key={command.id} value={command.id}>
               {/* fix the formatting -> dont just display the uuids */}
-              {command.status} | type {command.type_} | {command.id.slice(0,8)}
+              {command.status} | type {command.type_} | {command.id.slice(0, 8)}
             </option>
           ))}
         </select>
@@ -109,7 +104,6 @@ function CommandHistoryPage() {
       )}
     </main>
   );
-
 }
 
 export default CommandHistoryPage;

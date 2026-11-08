@@ -24,7 +24,7 @@ const mockHistoryData = [
 
 describe("CommandHistoryPage", () => {
   beforeEach(() => {
-        vi.mocked(useCommandHistory).mockReturnValue({
+    vi.mocked(useCommandHistory).mockReturnValue({
       data: mockHistoryData,
       isLoading: false,
       isError: false,

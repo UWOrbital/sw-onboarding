@@ -19,17 +19,17 @@ export function useCommandHistory(
     queryKey: ["commandHistory", commandId],
     queryFn: async () => {
       const response = await fetch(
-      `http://localhost:8001/api/commands/${commandId}/history`,
-    );
+        `http://localhost:8001/api/commands/${commandId}/history`,
+      );
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch command history");
-    }
+      if (!response.ok) {
+        throw new Error("Failed to fetch command history");
+      }
 
-    const result: { data: CommandHistory[] } = await response.json();
-    return result.data;
-  },
-  enabled: Boolean(commandId),
-  refetchInterval,
-});
+      const result: { data: CommandHistory[] } = await response.json();
+      return result.data;
+    },
+    enabled: Boolean(commandId),
+    refetchInterval,
+  });
 }
