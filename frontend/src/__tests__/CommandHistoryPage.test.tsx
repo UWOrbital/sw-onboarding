@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import CommandHistoryPage from "../pages/CommandHistoryPage";
 import { useCommandHistory } from "../hooks/useCommandHistory";
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -29,6 +29,15 @@ describe("CommandHistoryPage", () => {
       isLoading: false,
       isError: false,
     } as unknown as UseQueryResult<CommandHistory[]>);
+
+    vi.spyOn(globalThis, "fetch").mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: [] }),
+    } as Response);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it("renders without crashing", () => {
