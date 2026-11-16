@@ -57,7 +57,6 @@ function CommandHistoryPage() {
         <p className="text-foreground">No history found for this command.</p>
       )}
       <Table data={data ?? []} columns={columns} />
-      <Table data={data ?? []} columns={columns} />
     </div>
   );
 }
