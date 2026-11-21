@@ -25,15 +25,15 @@ function CommandHistoryPage() {
 
   return (
     <div className="flex flex-col items-center p-8">
-      <h1 className="text-2xl mb-6">Command Audit Log</h1>
+      <h1 className="text-2xl mb-6">Command History Audit Log</h1>
       <input
         type="text"
-        placeholder="Please enter a command ID"
+        placeholder="Please enter a command ID..."
         value={commandId}
         onChange={(e) => setCommandId(e.target.value)}
-        className="w-full max-w-md mb-6 bg-input text-foreground px-4 py-2 rounded-lg border border-border focus:outline-none focus:border-ring"
+        className="w-full max-w-3xl mb-6 bg-input text-foreground px-4 py-2 rounded-lg border border-border focus:outline-none focus:border-ring"
       />
-      {isLoading && <p className="mb-6">Loading...</p>}
+
       {isError && <p className="mb-6">No history found for this command.</p>}
       <Table data={data ?? []} columns={columns} />
     </div>
