@@ -119,7 +119,7 @@ async def delete_command(
     :param command_history: injected CommandHistory repository.
     :return: Confirmation message with the deleted command ID.
     """
-    # TODO: (STEP 4) Wire CommandHistory table appending into this route!
+
     try:
         await commands.get_by_id(command_id)
     except ValueError as e:
