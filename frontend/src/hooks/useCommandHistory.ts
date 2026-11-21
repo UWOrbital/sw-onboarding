@@ -22,7 +22,9 @@ export function useCommandHistory(
       return body.data;
 
     },
-    refetchInterval: REFETCH_INTERVAL_MS
+    refetchInterval: REFETCH_INTERVAL_MS,
+    enabled: commandId!=="",
+
 
 
   });
